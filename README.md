@@ -1,4 +1,5 @@
-#THE STUDENT ACTIVITY ALLOCATION SYSTEM(SAAS0
+#THE STUDENT ACTIVITY ALLOCATION SYSTEM(SAAS)
+
 The Student Activity Allocation System (SAAS) is a comprehensive management tool designed to facilitate the administration of student details, club and society memberships, and sports activities within educational institutions. Built using C++, it offers a console-based interface for easy navigation and management by administrators.
 ## Features
 - Admin and student login
