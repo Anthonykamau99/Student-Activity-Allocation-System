@@ -1,0 +1,4 @@
+Rugby 18 12 5
+Athletics 20 14 8
+Swimming 15 7 4
+Soccer 12 6 3
