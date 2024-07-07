@@ -1,0 +1,5 @@
+JournalismClub 26 19 10
+RedCrossSociety 21 16 8
+AISEC 18 12 7
+BusinessClub 25 13 9
+ComputerScienceClub 18 14 6
