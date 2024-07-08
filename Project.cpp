@@ -124,3 +124,98 @@ vector<Student> loadStudents(const string& file) {
     infile.close();
     return students;
 }
+
+// Save students to a CSV file
+void saveStudents(const vector<Student>& students, const string& file) {
+    ofstream outfile(file);
+    if (!outfile) {
+        cerr << "Can't open " << file << endl;
+        return;
+    }
+
+    outfile << "Admission Number,First Name,Surname,Gender,Age,BBIT Group,Activities" << endl;
+    for (const auto& student : students) {
+        outfile << student.admissionNumber << "," << student.firstName << "," << student.surname << ","
+             << student.gender << "," << student.age << "," << student.group << ",";
+        for (size_t i = 0; i < student.activities.size(); ++i) {
+            outfile << student.activities[i];
+            if (i < student.activities.size() - 1) {
+                outfile << ",";
+            }
+        }
+        outfile << endl;
+    }
+    outfile.close();
+}
+
+// Save activities to a file
+void saveActivities(const vector<Activity>& activities, const string& file) {
+    ofstream outfile(file);
+    if (!outfile) {
+        cerr << "Can't open " << file << endl;
+        return;
+    }
+
+    for (const auto& act : activities) {
+        outfile << act.name << " " << act.capacity << " "
+             << act.maleCount << " " << act.femaleCount << endl;
+    }
+    outfile.close();
+}
+
+// Add a student
+void addStudent(vector<Student>& students, unordered_map<string, string>& studentCreds) {
+    Student student;
+    cout << "Admission number: ";
+    cin >> student.admissionNumber;
+    for (const auto& existingStudent : students) {
+        if (existingStudent.admissionNumber == student.admissionNumber) {
+            cout << "Student with this admission number already exists." << endl;
+            return;
+        }
+    }
+    cout << "First name: ";
+    cin >> student.firstName;
+
+    // Validate first name length
+    if (student.firstName.length() < 3) {
+        cout << "First name must be at least 3 characters long." << endl;
+        return;
+    }
+
+    cout << "Surname: ";
+    cin >> student.surname;
+        // Validate surname length
+    if (student.surname.length() < 3) {
+        cout << "Surname must be at least 3 characters long." << endl;
+        return;
+    }
+
+    cout << "Gender (M/F): ";
+    cin >> student.gender;
+    cout << "Age: ";
+    cin >> student.age;
+
+    // Validate age
+    if (student.age < 17 || student.age > 40) {
+        cout << "Age must be between 17 and 40 to be eligible." << endl;
+        return;
+    }
+
+    // Prompt for BBIT group
+    cout << "BBIT group (A/B/C): ";
+    cin >> student.group;
+
+    // Validate BBIT group
+    if (student.group < 'A' || student.group > 'C') {
+        cout << "Invalid group. Choose A, B, or C." << endl;
+        return;
+    }
+        string password;
+    cout << "Set a password for the student: ";
+    cin >> password;
+    studentCreds[student.admissionNumber] = password;
+
+    students.push_back(student);
+    cout << "Student added successfully." << endl;
+}
