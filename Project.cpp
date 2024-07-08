@@ -398,3 +398,74 @@ void viewGroupedStudents(const vector<Student>& students) {
     }
 }
 
+int main() {
+    unordered_map<string, string> adminCreds;
+    unordered_map<string, string> studentCreds;
+
+    // Load admin credentials
+    if (!loadCreds("adminlogininfo.txt", adminCreds)) {
+        return 1;
+    }
+
+    // Admin login loop
+    string loggedInUser;
+    while (!login(adminCreds, loggedInUser)) {}
+
+    // Load students and activities
+    vector<Student> students = loadStudents("listofstudents.csv");
+    vector<Activity> clubs = loadActivities("clubs.txt");
+    vector<Activity> sports = loadActivities("sports.txt");
+
+    // Main menu loop
+    while (true) {
+        showMenu();
+        int choice;
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                addStudent(students, studentCreds);
+                break;
+            case 2:
+                viewAllStudents(students);
+                break;
+            case 3:
+                viewClubs(clubs);
+                break;
+            case 4:
+                viewSports(sports);
+                break;
+            case 5:
+                if (!students.empty()) {
+                    string admissionNumber;
+                    cout << "Admission number: ";
+                    cin >> admissionNumber;
+
+                    auto it = find_if(students.begin(), students.end(), [&admissionNumber](const Student& student) {
+                        return student.admissionNumber == admissionNumber;
+                    });
+
+                    if (it != students.end()) {
+                        chooseActivities(*it, clubs, sports);
+                    } else {
+                        cout << "Student not found." << endl;
+                    }
+                } else {
+                    cout << "No students available." << endl;
+                }
+                break;
+            case 6:
+                saveStudents(students, "listofstudents.csv");
+                saveActivities(clubs, "clubs.txt");
+                saveActivities(sports, "sports.txt");
+                cout << "All data saved successfully." << endl;
+                break;
+            case 7:
+                return 0;
+            default:
+                cout << "Invalid choice. Try again." << endl;
+        }
+    }
+
+    return 0;
+}
