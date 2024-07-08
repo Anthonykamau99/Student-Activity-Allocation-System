@@ -1,0 +1,5 @@
+Basketball 19 11 5
+Soccer 21 13 8
+Tennis 10 5 3
+Swimming 15 7 4
+Volleyball 12 6 3
